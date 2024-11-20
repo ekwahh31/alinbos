@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Matriks</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Kalkulator Matriks</h1>
+        
+        <!-- Atur Ordo Matriks A -->
+        <div class="order-selection">
+            <h2>Atur Ordo Matriks A</h2>
+            <label for="matrix-a-rows">Baris:</label>
+            <input type="number" id="matrix-a-rows" min="1" value="3">
+            <label for="matrix-a-cols">Kolom:</label>
+            <input type="number" id="matrix-a-cols" min="1" value="3">
+            <button id="set-matrix-a-btn">Atur Matriks A</button>
+        </div>
+
+        <!-- Input Matriks A -->
+        <div class="matrix-inputs">
+            <h2>Matriks A</h2>
+            <div id="matrix-a" class="matrix"></div>
+        </div>
+
+        <!-- Atur Ordo Matriks B -->
+        <div class="order-selection">
+            <h2>Atur Ordo Matriks B</h2>
+            <label for="matrix-b-rows">Baris:</label>
+            <input type="number" id="matrix-b-rows" min="1" value="3">
+            <label for="matrix-b-cols">Kolom:</label>
+            <input type="number" id="matrix-b-cols" min="1" value="3">
+            <button id="set-matrix-b-btn">Atur Matriks B</button>
+        </div>
+
+        <!-- Input Matriks B -->
+        <div class="matrix-inputs">
+            <h2>Matriks B</h2>
+            <div id="matrix-b" class="matrix"></div>
+        </div>
+
+        <!-- Tombol Hitung -->
+        <button id="calculate-btn">Hitung Penjumlahan</button>
+
+        <!-- Hasil -->
+        <h2>Hasil</h2>
+        <div id="result" class="matrix"></div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
