@@ -98,6 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event Listener
     document.getElementById('set-matrix-a-btn').addEventListener('click', setMatrixAOrder);
     document.getElementById('set-matrix-b-btn').addEventListener('click', setMatrixBOrder);
-    document.getElementById('calculate-btn').addEventListener('click', () => calculateMatrixSum(rowsA, colsA, rowsB, colsB));
+    document.getElementById('calculate-sum-btn').addEventListener('click', () => calculateMatrixSum(rowsA, colsA, rowsB, colsB));
     document.getElementById('subtraction-btn').addEventListener('click', () => calculateMatrixSubtraction(rowsA, colsA, rowsB, colsB));
 });
