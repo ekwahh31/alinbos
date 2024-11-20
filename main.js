@@ -60,6 +60,17 @@ function calculateMatrixSum(rowsA, colsA, rowsB, colsB) {
     displayResult(result);
 }
 
+function calculateMatrixSubtraction(rowsA, colsA, rowsB, colsB) {
+    if (rowsA !== rowsB || colsA !== colsB) {
+        alert("Pengurangan matriks hanya dapat dilakukan jika ordo kedua matriks sama!");
+        return;
+    }
+    const matrixA = getMatrixValues('matrix-a', rowsA, colsA);
+    const matrixB = getMatrixValues('matrix-b', rowsB, colsB);
+    const result = matrixA.map((row, i) => row.map((val, j) => val - matrixB[i][j]));
+    displayResult(result);
+}
+
 // Inisialisasi
 document.addEventListener('DOMContentLoaded', () => {
     let rowsA = 3, colsA = 3;
@@ -88,4 +99,5 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('set-matrix-a-btn').addEventListener('click', setMatrixAOrder);
     document.getElementById('set-matrix-b-btn').addEventListener('click', setMatrixBOrder);
     document.getElementById('calculate-btn').addEventListener('click', () => calculateMatrixSum(rowsA, colsA, rowsB, colsB));
+    document.getElementById('subtraction-btn').addEventListener('click', () => calculateMatrixSubtraction(rowsA, colsA, rowsB, colsB));
 });
