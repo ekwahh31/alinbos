@@ -60,6 +60,7 @@ function calculateMatrixSum(rowsA, colsA, rowsB, colsB) {
     displayResult(result);
 }
 
+// Kalkulasi Pengurangan Matriks
 function calculateMatrixSubtraction(rowsA, colsA, rowsB, colsB) {
     if (rowsA !== rowsB || colsA !== colsB) {
         alert("Pengurangan matriks hanya dapat dilakukan jika ordo kedua matriks sama!");
@@ -68,6 +69,31 @@ function calculateMatrixSubtraction(rowsA, colsA, rowsB, colsB) {
     const matrixA = getMatrixValues('matrix-a', rowsA, colsA);
     const matrixB = getMatrixValues('matrix-b', rowsB, colsB);
     const result = matrixA.map((row, i) => row.map((val, j) => val - matrixB[i][j]));
+    displayResult(result);
+}
+
+// Kalkulasi Perkalian Dua Matriks
+function multiplyMatrices(matrixA, matrixB) {
+    const rowsA = matrixA.length;
+    const colsA = matrixA[0].length;
+    const rowsB = matrixB.length;
+    const colsB = matrixB[0].length;
+
+    if (colsA !== rowsB) {
+        throw new Error('Jumlah kolom matriks A harus sama dengan jumlah baris matriks B');
+    }
+
+    const result = [];
+    for (let i = 0; i < rowsA; i++) {
+        result[i] = [];
+        for (let j = 0; j < colsB; j++) {
+            let sum = 0;
+            for (let k = 0; k < colsA; k++) {
+                sum += matrixA[i][k] * matrixB[k][j];
+            }
+            result[i][j] = sum;
+        }
+    }
     displayResult(result);
 }
 
@@ -100,4 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('set-matrix-b-btn').addEventListener('click', setMatrixBOrder);
     document.getElementById('calculate-sum-btn').addEventListener('click', () => calculateMatrixSum(rowsA, colsA, rowsB, colsB));
     document.getElementById('subtraction-btn').addEventListener('click', () => calculateMatrixSubtraction(rowsA, colsA, rowsB, colsB));
+    document.getElementById('multiply-btn').addEventListener('click', () => {
+        const matrixA = getMatrixValues('matrix-a', rowsA, colsA);
+        const matrixB = getMatrixValues('matrix-b', rowsB, colsB);
+        multiplyMatrices(matrixA, matrixB);
+    });
 });
