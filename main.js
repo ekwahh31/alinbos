@@ -1,4 +1,63 @@
-// Membuat input matriks dengan ordo dinamis
+// Inisialisasi
+document.addEventListener('DOMContentLoaded', () => {
+  let rowsA = 2, colsA = 2;
+  let rowsB = 2, colsB = 2;
+
+  // Fungsi untuk mengatur ordo matriks
+  function setMatrixAOrder() {
+      rowsA = parseInt(document.getElementById('matrix-a-rows').value) || 1;
+      colsA = parseInt(document.getElementById('matrix-a-cols').value) || 1;
+      createMatrix('matrix-a', rowsA, colsA);
+      document.getElementById('result').innerHTML = ''; // Reset hasil
+  }
+
+  function setMatrixBOrder() {
+      rowsB = parseInt(document.getElementById('matrix-b-rows').value) || 1;
+      colsB = parseInt(document.getElementById('matrix-b-cols').value) || 1;
+      createMatrix('matrix-b', rowsB, colsB);
+      document.getElementById('result').innerHTML = ''; // Reset hasil
+  }
+
+  // Inisialisasi awal
+  setMatrixAOrder();
+  setMatrixBOrder();
+
+  // Event Listener
+  document.getElementById('set-matrix-a-btn').addEventListener('click', setMatrixAOrder);
+  document.getElementById('set-matrix-b-btn').addEventListener('click', setMatrixBOrder);
+  document.getElementById('calculate-sum-btn').addEventListener('click', () => 
+      calculateMatrixSum(rowsA, colsA, rowsB, colsB)
+  );
+  document.getElementById('subtraction-btn').addEventListener('click', () => 
+      calculateMatrixSubtraction(rowsA, colsA, rowsB, colsB)
+  );
+  document.getElementById('multiply-btn').addEventListener('click', () => {
+      const matrixA = getMatrixValues('matrix-a', rowsA, colsA);
+      const matrixB = getMatrixValues('matrix-b', rowsB, colsB);
+      multiplyMatrices(matrixA, matrixB);
+  });
+  document.getElementById('determinant-btn').addEventListener('click', () => {
+      const matrixA = getMatrixValues('matrix-a', rowsA, colsA);
+      const result = determinant(matrixA);
+      displayResult([[result]]);
+  });
+  document.getElementById('transpose-btn').addEventListener('click', () => {
+      const matrixA = getMatrixValues('matrix-a', rowsA, colsA);
+      const result = transpose(matrixA);
+      displayResult(result);
+  });
+  document.getElementById('invert-btn').addEventListener('click', () => {
+      const matrixA = getMatrixValues('matrix-a', rowsA, colsA);
+      try {
+          const result = invert(matrixA);
+          displayResult(result);
+      } catch (e) {
+          alert(e.message);
+      }
+  });
+});
+
+// Membuat input matriks sesuai ordo inputan
 function createMatrix(containerId, rows, cols) {
     const container = document.getElementById(containerId);
     container.innerHTML = '';
@@ -29,28 +88,6 @@ function getMatrixValues(containerId, rows, cols) {
         values.push(row);
     }
     return values;
-}
-
-// Menampilkan hasil matriks
-function displayResult(result) {
-    const resultContainer = document.getElementById('result');
-    resultContainer.innerHTML = '';
-
-    const table = document.createElement('table');
-    table.className = 'result-table';
-
-    result.forEach(row => {
-        const tr = document.createElement('tr');
-        row.forEach(value => {
-            const td = document.createElement('td');
-            td.textContent = Number.isInteger(value) ? value : value.toFixed(2); // Menampilkan nilai desimal dengan 2 angka di belakang koma
-            td.className = 'result-cell';
-            tr.appendChild(td);
-        });
-        table.appendChild(tr);
-    });
-
-    resultContainer.appendChild(table);
 }
 
 // Kalkulasi Penjumlahan Matriks
@@ -102,7 +139,7 @@ function multiplyMatrices(matrixA, matrixB) {
     displayResult(result);
 }
 
-// Fungsi untuk menghitung determinan matriks
+// Kalkulasi determinan matriks
 function determinant(matrix) {
   if (!matrix || matrix.length === 0) {
     throw new Error('Matrix is empty');
@@ -125,7 +162,7 @@ function determinant(matrix) {
   return det;
 }
 
-// Fungsi untuk transpose matriks
+// Kalkulasi transpose matriks
 function transpose(matrix) {
   if (!matrix || matrix.length === 0) {
     throw new Error('Matrix is empty');
@@ -142,7 +179,7 @@ function transpose(matrix) {
   return transposed;
 }
 
-// Fungsi untuk menghitung invers matriks
+// Kalkulasi invers matriks
 function invert(matrix) {
   if (!matrix || matrix.length === 0) {
     throw new Error('Matrix is empty');
@@ -184,65 +221,23 @@ function getMinor(matrix, row, col) {
     .map(row => row.slice(0, col).concat(row.slice(col + 1)));
 }
 
-// Inisialisasi
-document.addEventListener('DOMContentLoaded', () => {
-    let rowsA = 2, colsA = 2;
-    let rowsB = 2, colsB = 2;
+// Menampilkan hasil matriks
+function displayResult(result) {
+  const resultContainer = document.getElementById('result');
+  resultContainer.innerHTML = '';
 
-    // Fungsi untuk mengatur ordo matriks
-    function setMatrixAOrder() {
-        rowsA = parseInt(document.getElementById('matrix-a-rows').value) || 1;
-        colsA = parseInt(document.getElementById('matrix-a-cols').value) || 1;
-        createMatrix('matrix-a', rowsA, colsA);
-        document.getElementById('result').innerHTML = ''; // Reset hasil
-    }
+  const table = document.createElement('table');
+  table.className = 'result-table';
+  result.forEach(row => {
+      const tr = document.createElement('tr');
+      row.forEach(value => {
+          const td = document.createElement('td');
+          td.textContent = Number.isInteger(value) ? value : value.toFixed(2); // Menampilkan nilai desimal dengan 2 angka di belakang koma
+          td.className = 'result-cell';
+          tr.appendChild(td);
+      });
+      table.appendChild(tr);
+  });
 
-    function setMatrixBOrder() {
-        rowsB = parseInt(document.getElementById('matrix-b-rows').value) || 1;
-        colsB = parseInt(document.getElementById('matrix-b-cols').value) || 1;
-        createMatrix('matrix-b', rowsB, colsB);
-        document.getElementById('result').innerHTML = ''; // Reset hasil
-    }
-
-    // Inisialisasi awal
-    setMatrixAOrder();
-    setMatrixBOrder();
-
-    // Event Listener
-    document.getElementById('set-matrix-a-btn').addEventListener('click', setMatrixAOrder);
-    document.getElementById('set-matrix-b-btn').addEventListener('click', setMatrixBOrder);
-    document.getElementById('calculate-sum-btn').addEventListener('click', () => 
-        calculateMatrixSum(rowsA, colsA, rowsB, colsB)
-    );
-    document.getElementById('subtraction-btn').addEventListener('click', () => 
-        calculateMatrixSubtraction(rowsA, colsA, rowsB, colsB)
-    );
-    document.getElementById('multiply-btn').addEventListener('click', () => {
-        const matrixA = getMatrixValues('matrix-a', rowsA, colsA);
-        const matrixB = getMatrixValues('matrix-b', rowsB, colsB);
-        multiplyMatrices(matrixA, matrixB);
-    });
-
-    // Event Listener untuk Determinan, Transpose dan Invers
-    document.getElementById('determinant-btn').addEventListener('click', () => {
-        const matrixA = getMatrixValues('matrix-a', rowsA, colsA);
-        const result = determinant(matrixA);
-        displayResult([[result]]);
-    });
-
-    document.getElementById('transpose-btn').addEventListener('click', () => {
-        const matrixA = getMatrixValues('matrix-a', rowsA, colsA);
-        const result = transpose(matrixA);
-        displayResult(result);
-    });
-
-    document.getElementById('invert-btn').addEventListener('click', () => {
-        const matrixA = getMatrixValues('matrix-a', rowsA, colsA);
-        try {
-            const result = invert(matrixA);
-            displayResult(result);
-        } catch (e) {
-            alert(e.message);
-        }
-    });
-});
+  resultContainer.appendChild(table);
+}
